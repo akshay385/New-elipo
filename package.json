@@ -7,7 +7,7 @@
     "private": true,
     "dependencies": {
         "@sap-cloud-sdk/http-client": "^3.7.0",
-        "@sap-cloud-sdk/resilience": "^3.7.0",
+        "@sap-cloud-sdk/resilience": "^3.14.0",
         "@sap/cds": "^7",
         "@sap/cds-hana": "^2.0.0",
         "ajax": "^0.0.4",

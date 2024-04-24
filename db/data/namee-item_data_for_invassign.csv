@@ -1,0 +1,5 @@
+id,invoice,Item,Item_No,Material,HSN_SAC,Qty,Unit_Price,GL_Acc,Plant,Cost_Center,Disc_Per,GST_Per,Taxable_Amt,Tax_Amt,Total_Amt,bool
+"1c9b2226-e309-43b4-9609-43543314a896","INV001","Item1","001","Material1","HSN123",10,"10","GL001","Plant1","CC001","5%","10%","90","9","99",TRUE
+"2608b3cc-340a-4146-a538-e9d1a9b763b8","INV001","Item2","002","Material2","HSN456",20,"5","GL002","Plant2","CC002","3%","5%","90","4.5","94.5",FALSE
+"7666d39c-43e9-4bd4-9ad1-909d40504d3d","INV002","Item3","003","Material3","HSN789",15,"8","GL003","Plant3","CC003","7%","12%","120","18","138",TRUE
+"7a57cc22-c156-4b18-ac63-b7dad6a4d339","INV002","Item4","004","Material4","HSN321",25,"12","GL004","Plant4","CC004","4%","8%","300","24","324",FALSE

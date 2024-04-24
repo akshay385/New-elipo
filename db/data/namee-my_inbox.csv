@@ -1,0 +1,3 @@
+invoice_no,ref_inv_no,supplier_name,Date,Modified_by,modified_date_time,invoice_file,Action
+"INV001","REF_INV001","Supplier1","2024-04-24","User1","2024-04-24 08:00:00","invoice001.pdf","Review"
+"INV002","REF_INV002","Supplier2","2024-04-23","User2","2024-04-23 10:00:00","invoice002.pdf","Approve"
