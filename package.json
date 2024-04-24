@@ -1,0 +1,45 @@
+{
+    "name": "Elipo",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/http-client": "^3.7.0",
+        "@sap-cloud-sdk/resilience": "^3.7.0",
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2.0.0",
+        "ajax": "^0.0.4",
+        "express": "^4",
+        "passport": "^0.6.0"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.0",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-invoice_assignment_01": "cds watch --open invoice_assignment_01/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy Elipo --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "watch-comments_template_01": "cds watch --open comments_template_01/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-track_invoices_01": "cds watch --open track_invoices_01/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-invoice_cockpit_01": "cds watch --open invoice_cockpit_01/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-supplier_equires_01": "cds watch --open supplier_equires_01/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-supplier_enquires_001": "cds watch --open supplier_enquires_001/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-my_inbox_01": "cds watch --open my_inbox_01/webapp/index.html?sap-ui-xx-viewCache=false"
+    },
+    "sapux": [
+        "app/invoice_assignment_01",
+        "app/comments_template_01",
+        "app/track_invoices_01",
+        "app/invoice_cockpit_01",
+        "app/supplier_equires_01",
+        "app/supplier_enquires_001",
+        "app/my_inbox_01"
+    ]
+}

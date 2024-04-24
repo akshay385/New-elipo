@@ -1,0 +1,207 @@
+{
+    "_version": "1.58.0",
+    "sap.app": {
+        "id": "trackinvoices01",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.11.4",
+            "toolsId": "5068c2be-48c3-4a17-8d02-b2b8b9e1aba9"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/catalog/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "track_invoices_01-display": {
+                    "semanticObject": "track_invoices_01",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.120.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "trackinvoices01.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "track_invoicesList",
+                    "target": "track_invoicesList"
+                },
+                {
+                    "pattern": "track_invoices({key}):?query:",
+                    "name": "track_invoicesObjectPage",
+                    "target": "track_invoicesObjectPage"
+                }
+            ],
+            "targets": {
+                "track_invoicesList": {
+                    "type": "Component",
+                    "id": "track_invoicesList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/track_invoices",
+                            "variantManagement": "None",
+                            "navigation": {
+                                "track_invoices": {
+                                    "detail": {
+                                        "route": "track_invoicesObjectPage"
+                                    }
+                                }
+                            },
+                            "initialLoad": "Enabled",
+                            "controlConfiguration": {
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            },
+                            "hideFilterBar": true
+                        }
+                    }
+                },
+                "track_invoicesObjectPage": {
+                    "type": "Component",
+                    "id": "track_invoicesObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "contextPath": "/track_invoices",
+                            "controlConfiguration": {
+                                "item_data_parent/@com.sap.vocabularies.UI.v1.LineItem#item_details": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            },
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "GeneratedFacet1": {
+                                            "sideContent": {
+                                                "template": "trackinvoices01.ext.fragment.Pdfshow",
+                                                "position": {
+                                                    "placement": "After",
+                                                    "anchor": "GeneratedFacet1"
+                                                },
+                                                "title": "pdf",
+                                                "type": "XMLFragment"
+                                            },
+                                            "type": "XMLFragment"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "actions": {
+                                        "pdf": {
+                                            "press": "trackinvoices01.ext.controller.Pdf.pdfshow",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "show/hide"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.fe.templates.ObjectPage.ObjectPageController#trackinvoices01::track_invoicesObjectPage": {
+                        "controllerName": "trackinvoices01.ext.controller.Pdfcontroller"
+                    }
+                }
+            }
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "elipo_aks"
+    }
+}

@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns:upload="sap.m.upload" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros">
+	<VBox id="01">
+		<!-- <Button core:require="{ handler: 'supplierenquires001/ext/fragment/Attachment2'}" press="handler.onPress" id="02" /> -->
+		<upload:UploadSet
+					id="uploadSet"
+					core:require="{ handler: 'supplierenquires001/ext/fragment/Attachment2'}"
+					instantUpload="true"
+					uploadEnabled="true"
+					afterItemAdded="handler.onAfterItemAdded"
+					uploadCompleted="handler.onUploadCompleted"					
+					items="{
+								path: '/attachments',
+								templateShareable: false}"
+				>
+					<upload:toolbar>
+					</upload:toolbar>
+					<upload:items>
+						<upload:UploadSetItem id="fileupload"
+							fileName="{fileName}"
+							mediaType="{mediaType}"
+							url="{url}"
+							enabledEdit="true"
+							visibleEdit="true"
+							core:require="{ handler: 'supplierenquires001/ext/fragment/Attachment2'}"
+							openPressed="handler.onOpenPressed"
+							removePressed="handler.aftercancel"
+						>
+							<upload:attributes>
+								<ObjectAttribute id="2"
+									title="Uploaded By"
+									text="{createdBy}"
+									active="true"
+								/>
+								<ObjectAttribute id="3"
+									title="Uploaded on"
+									text="{createdAt}"
+									active="false"
+								/>
+								<ObjectAttribute id="4"
+									title="File Size"
+									text="{size}"
+									active="false"
+								/>
+							</upload:attributes>
+						</upload:UploadSetItem>
+					</upload:items>
+	</upload:UploadSet>
+	</VBox>
+</core:FragmentDefinition>

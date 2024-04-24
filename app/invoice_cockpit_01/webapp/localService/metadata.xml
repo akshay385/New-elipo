@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="inv_assg" EntityType="CatalogService.inv_assg">
+                    <NavigationPropertyBinding Path="item_data_parent" Target="item_data_for_invassign"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="inv_assg"/>
+                </EntitySet>
+                <EntitySet Name="item_data_for_invassign" EntityType="CatalogService.item_data_for_invassign">
+                    <NavigationPropertyBinding Path="item_data_child" Target="inv_assg"/>
+                </EntitySet>
+                <EntitySet Name="asgn_inv_to" EntityType="CatalogService.asgn_inv_to"/>
+                <EntitySet Name="comments_temp" EntityType="CatalogService.comments_temp">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="comments_temp"/>
+                </EntitySet>
+                <EntitySet Name="track_invoices" EntityType="CatalogService.track_invoices">
+                    <NavigationPropertyBinding Path="item_data_parent" Target="item_data_for_track"/>
+                </EntitySet>
+                <EntitySet Name="item_data_for_track" EntityType="CatalogService.item_data_for_track">
+                    <NavigationPropertyBinding Path="item_data_child1" Target="track_invoices"/>
+                </EntitySet>
+                <EntitySet Name="New" EntityType="CatalogService.New">
+                    <NavigationPropertyBinding Path="child_item" Target="item_new"/>
+                </EntitySet>
+                <EntitySet Name="item_new" EntityType="CatalogService.item_new">
+                    <NavigationPropertyBinding Path="item_data_child1" Target="New"/>
+                </EntitySet>
+                <FunctionImport Name="getPdfUrl" Function="CatalogService.getPdfUrl"/>
+                <FunctionImport Name="getPdfUrl1" Function="CatalogService.getPdfUrl1"/>
+            </EntityContainer>
+            <EntityType Name="inv_assg">
+                <Key>
+                    <PropertyRef Name="invoice"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="invoice" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="RE_INVOICE_NO" Type="Edm.String" MaxLength="40"/>
+                <Property Name="REF_INVOICE_NO" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Payment_Terms" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SUPPLIER_NAME" Type="Edm.String" MaxLength="40"/>
+                <Property Name="DATE" Type="Edm.String" MaxLength="40"/>
+                <Property Name="MODIFIED_by" Type="Edm.String" MaxLength="40"/>
+                <Property Name="modified_date_time" Type="Edm.String" MaxLength="40"/>
+                <Property Name="assign_inv_to" Type="Edm.String" MaxLength="40"/>
+                <Property Name="inv_file" Type="Edm.String"/>
+                <Property Name="IRN" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GSTIN" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Document_Type" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Invoice_Date" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Posting_Date" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Reference_po_number" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Due_Date" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Vendor_Code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Payment_Method" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Company_Code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GL_Account" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Cost_Center" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Discount_per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Discount_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TDS_per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Total_TDS_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SGST_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="CGST_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Taxable_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Adjustment" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Amount_Total" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Department" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Internal_Order" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TCS_amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="file_link" Type="Edm.String"/>
+                <NavigationProperty Name="item_data_parent" Type="Collection(CatalogService.item_data_for_invassign)" Partner="item_data_child"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="CatalogService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="CatalogService.inv_assg"/>
+            </EntityType>
+            <EntityType Name="item_data_for_invassign">
+                <Key>
+                    <PropertyRef Name="id"/>
+                    <PropertyRef Name="invoice"/>
+                </Key>
+                <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="invoice" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="Item" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Item_No" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+                <Property Name="HSN_SAC" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Qty" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Unit_Price" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GL_Acc" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Cost_Center" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Disc_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GST_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Taxable_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Tax_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Total_Amt" Type="Edm.String" MaxLength="30"/>
+                <Property Name="bool" Type="Edm.Boolean"/>
+                <NavigationProperty Name="item_data_child" Type="CatalogService.inv_assg" Partner="item_data_parent">
+                    <ReferentialConstraint Property="invoice" ReferencedProperty="invoice"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="asgn_inv_to">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+                <Property Name="is_group" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="comments_temp">
+                <Key>
+                    <PropertyRef Name="id"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="sr_no" Type="Edm.String"/>
+                <Property Name="comments_title" Type="Edm.String"/>
+                <Property Name="comments_desc" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="CatalogService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="CatalogService.comments_temp"/>
+            </EntityType>
+            <EntityType Name="track_invoices">
+                <Key>
+                    <PropertyRef Name="invoice"/>
+                </Key>
+                <Property Name="invoice" Type="Edm.String" Nullable="false"/>
+                <Property Name="Ref_invoice" Type="Edm.String"/>
+                <Property Name="Ref_PO_Num" Type="Edm.String"/>
+                <Property Name="Due_Date" Type="Edm.String"/>
+                <Property Name="suplier_name" Type="Edm.String"/>
+                <Property Name="invoice_date" Type="Edm.String"/>
+                <Property Name="modified_by" Type="Edm.String"/>
+                <Property Name="Status" Type="Edm.String"/>
+                <Property Name="error_log" Type="Edm.String"/>
+                <Property Name="faulty" Type="Edm.Int32"/>
+                <Property Name="Payment_Terms" Type="Edm.String"/>
+                <Property Name="IRN" Type="Edm.String"/>
+                <Property Name="GSTIN" Type="Edm.String"/>
+                <Property Name="Document_Type" Type="Edm.String"/>
+                <Property Name="Posting_Date" Type="Edm.String"/>
+                <Property Name="Vendor_Code" Type="Edm.String"/>
+                <Property Name="Payment_Method" Type="Edm.String"/>
+                <Property Name="Company_Code" Type="Edm.String"/>
+                <Property Name="Currency" Type="Edm.String"/>
+                <Property Name="Department" Type="Edm.String"/>
+                <Property Name="GL_Account" Type="Edm.String"/>
+                <Property Name="Cost_Center" Type="Edm.String"/>
+                <Property Name="Internal_Order" Type="Edm.String"/>
+                <Property Name="Taxable_Amount" Type="Edm.String"/>
+                <Property Name="Adjustment" Type="Edm.String"/>
+                <Property Name="Amount_Total" Type="Edm.String"/>
+                <Property Name="TCS_amount" Type="Edm.String"/>
+                <Property Name="TDS_per" Type="Edm.String"/>
+                <Property Name="Total_TDS_Amount" Type="Edm.String"/>
+                <Property Name="Discount_per" Type="Edm.String"/>
+                <Property Name="Discount_Amount" Type="Edm.String"/>
+                <Property Name="CGST_Amount" Type="Edm.String"/>
+                <Property Name="SGST_Amount" Type="Edm.String"/>
+                <Property Name="file_link" Type="Edm.String"/>
+                <NavigationProperty Name="item_data_parent" Type="Collection(CatalogService.item_data_for_track)" Partner="item_data_child1"/>
+            </EntityType>
+            <EntityType Name="item_data_for_track">
+                <Key>
+                    <PropertyRef Name="id"/>
+                    <PropertyRef Name="invoice"/>
+                </Key>
+                <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="invoice" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="Item" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Item_No" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+                <Property Name="HSN_Code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Qty" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Unit_Price" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GL_Acc" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Cost_Center" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Disc_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GST_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Taxable_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Tax_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Total_Amt" Type="Edm.String" MaxLength="30"/>
+                <Property Name="bool" Type="Edm.Boolean"/>
+                <NavigationProperty Name="item_data_child1" Type="CatalogService.track_invoices" Partner="item_data_parent">
+                    <ReferentialConstraint Property="invoice" ReferencedProperty="invoice"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="New">
+                <Key>
+                    <PropertyRef Name="invoice_no"/>
+                </Key>
+                <Property Name="invoice_no" Type="Edm.String" Nullable="false"/>
+                <Property Name="Ref_invoice_no" Type="Edm.String"/>
+                <Property Name="supplier_name" Type="Edm.String" DefaultValue="NA"/>
+                <Property Name="Date" Type="Edm.Date"/>
+                <Property Name="modified_date_time" Type="Edm.String"/>
+                <Property Name="INVOICE_FILE" Type="Edm.String"/>
+                <Property Name="irn" Type="Edm.String"/>
+                <Property Name="ref_po_num" Type="Edm.String"/>
+                <Property Name="gstin" Type="Edm.String"/>
+                <Property Name="Document_Type" Type="Edm.String"/>
+                <Property Name="Ref_invoice_no1" Type="Edm.String"/>
+                <Property Name="invoice_date" Type="Edm.String"/>
+                <Property Name="posting_date" Type="Edm.String"/>
+                <Property Name="baseline_date" Type="Edm.String"/>
+                <Property Name="Vendor_Code" Type="Edm.String"/>
+                <Property Name="payment_terms" Type="Edm.String"/>
+                <Property Name="payment_method" Type="Edm.String"/>
+                <Property Name="company_code" Type="Edm.String"/>
+                <Property Name="currency" Type="Edm.String"/>
+                <Property Name="department_name" Type="Edm.String"/>
+                <Property Name="gl_account" Type="Edm.String"/>
+                <Property Name="cost_center" Type="Edm.String"/>
+                <Property Name="internal_order" Type="Edm.String"/>
+                <Property Name="taxable_amount" Type="Edm.String"/>
+                <Property Name="adjustment" Type="Edm.String"/>
+                <Property Name="amount" Type="Edm.String"/>
+                <Property Name="tcs" Type="Edm.String"/>
+                <Property Name="tds_per" Type="Edm.String"/>
+                <Property Name="tds_tot_amt" Type="Edm.String"/>
+                <Property Name="discount_per" Type="Edm.String"/>
+                <Property Name="total_discount_amount" Type="Edm.String"/>
+                <Property Name="vat_per" Type="Edm.String"/>
+                <NavigationProperty Name="child_item" Type="Collection(CatalogService.item_new)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="item_new">
+                <Key>
+                    <PropertyRef Name="id"/>
+                    <PropertyRef Name="invoice"/>
+                </Key>
+                <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="invoice" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="Item" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Item_No" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+                <Property Name="HSN_Code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Qty" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Unit_Price" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GL_Acc" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Cost_Center" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Disc_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GST_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Taxable_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Tax_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Total_Amt" Type="Edm.String" MaxLength="30"/>
+                <Property Name="bool" Type="Edm.Boolean"/>
+                <NavigationProperty Name="item_data_child1" Type="CatalogService.New">
+                    <ReferentialConstraint Property="invoice" ReferencedProperty="invoice_no"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="CatalogService.inv_assg"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="CatalogService.inv_assg"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="CatalogService.comments_temp"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="CatalogService.comments_temp"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="CatalogService.inv_assg"/>
+                <ReturnType Type="CatalogService.inv_assg"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="CatalogService.comments_temp"/>
+                <ReturnType Type="CatalogService.comments_temp"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="CatalogService.inv_assg"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="CatalogService.inv_assg"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="CatalogService.comments_temp"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="CatalogService.comments_temp"/>
+            </Action>
+            <Function Name="getPdfUrl" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="getPdfUrl1" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Annotations Target="CatalogService.EntityContainer/inv_assg">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="CatalogService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="CatalogService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="CatalogService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CatalogService.inv_assg/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.inv_assg/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.inv_assg/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.inv_assg/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.EntityContainer/comments_temp">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="CatalogService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="CatalogService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="CatalogService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CatalogService.comments_temp/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.comments_temp/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.comments_temp/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.comments_temp/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                </Annotations>
+                <Annotations Target="CatalogService.DraftAdministrativeData/DraftUUID">
+                    <Annotation Term="UI.Hidden" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                    </Annotations>
+                    <Annotations Target="CatalogService.DraftAdministrativeData/CreationDateTime">
+                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                        </Annotations>
+                        <Annotations Target="CatalogService.DraftAdministrativeData/CreatedByUser">
+                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                            </Annotations>
+                            <Annotations Target="CatalogService.DraftAdministrativeData/DraftIsCreatedByMe">
+                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                </Annotations>
+                                <Annotations Target="CatalogService.DraftAdministrativeData/LastChangeDateTime">
+                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                    </Annotations>
+                                    <Annotations Target="CatalogService.DraftAdministrativeData/LastChangedByUser">
+                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                        </Annotations>
+                                        <Annotations Target="CatalogService.DraftAdministrativeData/InProcessByUser">
+                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                            </Annotations>
+                                            <Annotations Target="CatalogService.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                </Annotations>
+                                            </Schema>
+                                        </edmx:DataServices>
+                                    </edmx:Edmx>

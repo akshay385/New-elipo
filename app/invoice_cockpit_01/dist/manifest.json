@@ -1,0 +1,508 @@
+{
+    "_version": "1.58.0",
+    "sap.app": {
+        "id": "invoicecockpit01",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.11.4",
+            "toolsId": "f9331758-d045-4d38-8389-eb6d678efd0f"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/catalog/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "invoice_cockpit_01-display": {
+                    "semanticObject": "invoice_cockpit_01",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.120.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "invoicecockpit01.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "NewList",
+                    "target": "NewList"
+                },
+                {
+                    "pattern": "New({key}):?query:",
+                    "name": "NewObjectPage",
+                    "target": "NewObjectPage"
+                },
+                {
+                    "pattern": "Draft({key}):?query:",
+                    "name": "DraftObjectPage",
+                    "target": "DraftObjectPage"
+                },
+                {
+                    "pattern": "Rejected({key}):?query:",
+                    "name": "RejectedObjectPage",
+                    "target": "RejectedObjectPage"
+                },
+                {
+                    "pattern": "inapproval({key}):?query:",
+                    "name": "inapprovalObjectPage",
+                    "target": "inapprovalObjectPage"
+                },
+                {
+                    "pattern": "Submitted_to_ERP({key}):?query:",
+                    "name": "Submitted_to_ERPObjectPage",
+                    "target": "Submitted_to_ERPObjectPage"
+                }
+            ],
+            "targets": {
+                "NewList": {
+                    "type": "Component",
+                    "id": "NewList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/New",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "New": {
+                                    "detail": {
+                                        "route": "NewObjectPage"
+                                    }
+                                },
+                                "Draft": {
+                                    "detail": {
+                                        "route": "DraftObjectPage"
+                                    }
+                                },
+                                "Rejected": {
+                                    "detail": {
+                                        "route": "RejectedObjectPage"
+                                    }
+                                },
+                                "inapproval": {
+                                    "detail": {
+                                        "route": "inapprovalObjectPage"
+                                    }
+                                },
+                                "Submitted_to_ERP": {
+                                    "detail": {
+                                        "route": "Submitted_to_ERPObjectPage"
+                                    }
+                                }
+                            },
+                            "views": {
+                                "paths": [
+                                    {
+                                        "key": "tableView",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView"
+                                    },
+                                    {
+                                        "key": "tableView1",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView1",
+                                        "entitySet": "Draft"
+                                    },
+                                    {
+                                        "key": "tableView12",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView",
+                                        "entitySet": "Rejected"
+                                    },
+                                    {
+                                        "key": "tableView123",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView",
+                                        "entitySet": "inapproval"
+                                    },
+                                    {
+                                        "key": "tableView1234",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView",
+                                        "entitySet": "Submitted_to_ERP"
+                                    }
+                                ]
+                            },
+                            "initialLoad": "Enabled",
+                            "controlConfiguration": {
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                },
+                                "/Draft/@com.sap.vocabularies.UI.v1.LineItem#tableView1": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                },
+                                "/Rejected/@com.sap.vocabularies.UI.v1.LineItem#tableView": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                },
+                                "/inapproval/@com.sap.vocabularies.UI.v1.LineItem#tableView": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                },
+                                "/Submitted_to_ERP/@com.sap.vocabularies.UI.v1.LineItem#tableView": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "NewObjectPage": {
+                    "type": "Component",
+                    "id": "NewObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "contextPath": "/New",
+                            "navigation": {},
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "GeneratedFacet1": {
+                                            "sideContent": {
+                                                "template": "invoicecockpit01.ext.fragment.Pdfshow",
+                                                "position": {
+                                                    "placement": "After",
+                                                    "anchor": "GeneratedFacet1"
+                                                },
+                                                "title": "pdf",
+                                                "type": "XMLFragment"
+                                            },
+                                            "type": "XMLFragment"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "actions": {
+                                        "pdf": {
+                                            "press": "invoicecockpit01.ext.controller.Pdfshow.pdfshow",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "show/hide"
+                                        },
+                                        "upload": {
+                                            "press": "invoicecockpit01.ext.controller.Draftattachment.upload",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "UploadAttachment"
+                                        }
+                                    }
+                                }
+                            },
+                            "controlConfiguration": {
+                                "child_item/@com.sap.vocabularies.UI.v1.LineItem#itm_details": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "DraftObjectPage": {
+                    "type": "Component",
+                    "id": "DraftObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Draft",
+                            "navigation": {},
+                            "controlConfiguration": {
+                                "item_data_draft/@com.sap.vocabularies.UI.v1.LineItem#item": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            },
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "form1": {
+                                            "sideContent": {
+                                                "template": "invoicecockpit01.ext.fragment.Pdfshow1",
+                                                "position": {
+                                                    "placement": "After",
+                                                    "anchor": "form1"
+                                                },
+                                                "title": "pdf",
+                                                "type": "XMLFragment"
+                                            },
+                                            "type": "XMLFragment"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "actions": {
+                                        "pdf": {
+                                            "press": "invoicecockpit01.ext.controller.Pdfshow1.pdfshow",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "show/hide"
+                                        },
+                                        "upload": {
+                                            "press": "invoicecockpit01.ext.controller.secondview.upload",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "UploadAttachment"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "RejectedObjectPage": {
+                    "type": "Component",
+                    "id": "RejectedObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Rejected",
+                            "navigation": {},
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "form": {
+                                            "sideContent": {
+                                                "template": "invoicecockpit01.ext.fragment.Pdfshow2",
+                                                "position": {
+                                                    "placement": "After",
+                                                    "anchor": "form"
+                                                },
+                                                "title": "pdf",
+                                                "type": "XMLFragment"
+                                            },
+                                            "type": "XMLFragment"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "actions": {
+                                        "show": {
+                                            "press": "invoicecockpit01.ext.controller.Pdfshow2.pdfshow",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "show/hide"
+                                        },
+                                        "upload": {
+                                            "press": "invoicecockpit01.ext.controller.thirdview.upload",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "UploadAttachments"
+                                        }
+                                    }
+                                }
+                            },
+                            "controlConfiguration": {
+                                "item_data_draft/@com.sap.vocabularies.UI.v1.LineItem#item": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "inapprovalObjectPage": {
+                    "type": "Component",
+                    "id": "inapprovalObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/inapproval",
+                            "navigation": {},
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "form": {
+                                            "sideContent": {
+                                                "template": "invoicecockpit01.ext.fragment.Pdfshow3",
+                                                "position": {
+                                                    "placement": "After",
+                                                    "anchor": "form"
+                                                },
+                                                "title": "pdf",
+                                                "type": "XMLFragment"
+                                            },
+                                            "template": "invoicecockpit01.ext.fragment.Pdfshow3",
+                                            "position": {
+                                                "anchor": "form",
+                                                "placement": "After"
+                                            },
+                                            "type": "XMLFragment",
+                                            "title": "pdf"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "actions": {
+                                        "pdf": {
+                                            "press": "invoicecockpit01.ext.controller.Pdfshow3.pdfshowfunc",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "show/hide"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "Submitted_to_ERPObjectPage": {
+                    "type": "Component",
+                    "id": "Submitted_to_ERPObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Submitted_to_ERP",
+                            "navigation": {},
+                            "content": {
+                                "body": {
+                                    "sections": {
+                                        "form": {
+                                            "sideContent": {
+                                                "template": "invoicecockpit01.ext.fragment.Pdf",
+                                                "position": {
+                                                    "placement": "After",
+                                                    "anchor": "form"
+                                                },
+                                                "title": "pdfshow",
+                                                "type": "XMLFragment"
+                                            },
+                                            "type": "XMLFragment"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "actions": {
+                                        "pdf": {
+                                            "press": "invoicecockpit01.ext.controller.Pdfshow4.pdfshowfunc",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "show/hide"
+                                        }
+                                    }
+                                }
+                            },
+                            "controlConfiguration": {
+                                "item_data_erp/@com.sap.vocabularies.UI.v1.LineItem#item_data": {
+                                    "tableSettings": {
+                                        "type": "GridTable"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.fe.templates.ObjectPage.ObjectPageController#invoicecockpit01::NewObjectPage": {
+                        "controllerName": "invoicecockpit01.ext.controller.Pdfcontroller"
+                    },
+                    "sap.fe.templates.ObjectPage.ObjectPageController#invoicecockpit01::DraftObjectPage": {
+                        "controllerName": "invoicecockpit01.ext.controller.Pdfcontrollerdraft"
+                    },
+                    "sap.fe.templates.ObjectPage.ObjectPageController#invoicecockpit01::RejectedObjectPage": {
+                        "controllerName": "invoicecockpit01.ext.controller.Pdfcontrollerrej"
+                    },
+                    "sap.fe.templates.ObjectPage.ObjectPageController#invoicecockpit01::inapprovalObjectPage": {
+                        "controllerName": "invoicecockpit01.ext.controller.Pdf_controllerinapp"
+                    },
+                    "sap.fe.templates.ObjectPage.ObjectPageController#invoicecockpit01::Submitted_to_ERPObjectPage": {
+                        "controllerName": "invoicecockpit01.ext.controller.Pdf_controllersub3erp"
+                    }
+                }
+            }
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "elipo_aks"
+    }
+}

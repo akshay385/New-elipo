@@ -1,0 +1,204 @@
+_schema-version: "3.1"
+ID: Elipo
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: Elipo-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: uaa_Elipo
+  - name: Elipo-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+- name: Elipo-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: Elipo-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: Elipo-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: Elipo-destination-service
+    parameters:
+      content-target: true
+  - name: Elipo_html_repo_host
+    parameters:
+      service-key:
+        name: Elipo_html_repo_host-key
+  - name: uaa_Elipo
+    parameters:
+      service-key:
+        name: uaa_Elipo-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: elipo_aks_Elipo_html_repo_host
+          ServiceInstanceName: Elipo-html5-app-host-service
+          ServiceKeyName: Elipo_html_repo_host-key
+          sap.cloud.service: elipo_aks
+        - Authentication: OAuth2UserTokenExchange
+          Name: elipo_aks_uaa_Elipo
+          ServiceInstanceName: Elipo-xsuaa-service
+          ServiceKeyName: uaa_Elipo-key
+          sap.cloud.service: elipo_aks
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: Elipo-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: Elipo_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - invoiceassignment01.zip
+      name: invoiceassignment01
+      target-path: resources/
+    - artifacts:
+      - commentstemplate01.zip
+      name: commentstemplate01
+      target-path: resources/
+    - artifacts:
+      - trackinvoices01.zip
+      name: trackinvoices01
+      target-path: resources/
+    - artifacts:
+      - invoicecockpit01.zip
+      name: invoicecockpit01
+      target-path: resources/
+    - artifacts:
+      - supplierenquires001.zip
+      name: supplierenquires001
+      target-path: resources/
+    - artifacts:
+      - myinbox01.zip
+      name: myinbox01
+      target-path: resources/
+- name: invoiceassignment01
+  type: html5
+  path: app/invoice_assignment_01
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: commentstemplate01
+  type: html5
+  path: app/comments_template_01
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: trackinvoices01
+  type: html5
+  path: app/track_invoices_01
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: invoicecockpit01
+  type: html5
+  path: app/invoice_cockpit_01
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: supplierenquires001
+  type: html5
+  path: app/supplier_enquires_001
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: myinbox01
+  type: html5
+  path: app/my_inbox_01
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: Elipo-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: Elipo-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: Elipo-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: Elipo-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: Elipo_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: Elipo-html5-app-host-service
+    service-plan: app-host
+- name: uaa_Elipo
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: Elipo-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npx cds build --production

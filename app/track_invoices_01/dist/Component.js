@@ -1,0 +1,1 @@
+sap.ui.define(["sap/fe/core/AppComponent"],function(e){"use strict";return e.extend("trackinvoices01.Component",{metadata:{manifest:"json"}})});

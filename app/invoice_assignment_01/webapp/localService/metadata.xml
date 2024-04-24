@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="inv_assg" EntityType="CatalogService.inv_assg">
+                    <NavigationPropertyBinding Path="item_data_parent" Target="item_data_for_invassign"/>
+                </EntitySet>
+                <EntitySet Name="item_data_for_invassign" EntityType="CatalogService.item_data_for_invassign">
+                    <NavigationPropertyBinding Path="item_data_child" Target="inv_assg"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="inv_assg">
+                <Key>
+                    <PropertyRef Name="invoice"/>
+                </Key>
+                <Property Name="invoice" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="RE_INVOICE_NO" Type="Edm.String" MaxLength="40"/>
+                <Property Name="REF_INVOICE_NO" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Payment_Terms" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SUPPLIER_NAME" Type="Edm.String" MaxLength="40"/>
+                <Property Name="DATE" Type="Edm.String" MaxLength="40"/>
+                <Property Name="MODIFIED_by" Type="Edm.String" MaxLength="40"/>
+                <Property Name="modified_date_time" Type="Edm.String" MaxLength="40"/>
+                <Property Name="assign_inv_to" Type="Edm.String" MaxLength="40"/>
+                <Property Name="inv_file" Type="Edm.String"/>
+                <Property Name="IRN" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GSTIN" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Document_Type" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Invoice_Date" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Posting_Date" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Reference_po_number" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Due_Date" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Vendor_Code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Payment_Method" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Company_Code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GL_Account" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Cost_Center" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Discount_per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Discount_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TDS_per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Total_TDS_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SGST_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="CGST_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Taxable_Amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Adjustment" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Amount_Total" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Department" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Internal_Order" Type="Edm.String" MaxLength="40"/>
+                <Property Name="TCS_amount" Type="Edm.String" MaxLength="40"/>
+                <Property Name="file_link" Type="Edm.String"/>
+                <NavigationProperty Name="item_data_parent" Type="Collection(CatalogService.item_data_for_invassign)" Partner="item_data_child"/>
+            </EntityType>
+            <EntityType Name="item_data_for_invassign">
+                <Key>
+                    <PropertyRef Name="id"/>
+                    <PropertyRef Name="invoice"/>
+                </Key>
+                <Property Name="id" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="invoice" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="Item" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Item_No" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="40"/>
+                <Property Name="HSN_SAC" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Qty" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Unit_Price" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GL_Acc" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Cost_Center" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Disc_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GST_Per" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Taxable_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Tax_Amt" Type="Edm.String" MaxLength="40"/>
+                <Property Name="Total_Amt" Type="Edm.String" MaxLength="30"/>
+                <Property Name="bool" Type="Edm.Boolean"/>
+                <NavigationProperty Name="item_data_child" Type="CatalogService.inv_assg" Partner="item_data_parent">
+                    <ReferentialConstraint Property="invoice" ReferencedProperty="invoice"/>
+                </NavigationProperty>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
